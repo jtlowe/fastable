@@ -1,0 +1,9 @@
+{
+    "files": [
+        "src/table.ts"
+    ],
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "target": "es5"
+    }
+}
