@@ -1,5 +1,5 @@
 {
-  "name": "table.js",
+  "name": "table-it.js",
   "version": "1.0.0",
   "description": "Lightweight table generator",
   "main": "index.js",

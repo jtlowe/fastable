@@ -13,13 +13,10 @@ var connect = require("gulp-connect");
 var ts = require("gulp-typescript");
 var tsProject = ts.createProject("tsconfig.json");
 
-gulp.task('default', function () {
-    return gulp.src('src/**/*.ts')
-        .pipe(ts({
-            noImplicitAny: true,
-            out: 'table-it.js'
-        }))
-        .pipe(gulp.dest('dist'));
+gulp.task('typescript', function () {
+    return tsProject.src()
+        .pipe(tsProject())
+        .js.pipe(gulp.dest("dist"));
 });
 
 gulp.task('connect', function() {
@@ -30,8 +27,8 @@ gulp.task('connect', function() {
 });
 
 gulp.task('watch', function () {
-  gulp.watch(['./*.html'], ['html']);
-  gulp.watch(['./src/*.ts'], ['default']);
+  // gulp.watch(['./*.html'], ['html']);
+  gulp.watch(['./src/*.ts'], ['typescript']);
 });
 
-gulp.task('default');
+gulp.task('default', ['connect', 'watch', 'typescript']);

@@ -1,22 +1,9 @@
 {
     "files": [
-        "src/table.ts"
+        "src/table-it.ts"
     ],
-  "compilerOptions": {
-    "baseUrl": ".",
-    "declaration": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "outDir": "../dist/",
-    "noImplicitAny": true,
-    "noFallthroughCasesInSwitch": true,
-    "rootDir": ".",
-    "inlineSourceMap": true,
-    "lib": ["es5", "dom", "es2015.promise", "es2015.collection", "es2015.iterable"],
-    "skipDefaultLibCheck": true,
-    "skipLibCheck": true,
-    "target": "es5"
-  }
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "target": "es5"
+    }
 }
