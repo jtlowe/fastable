@@ -1,4 +1,12 @@
 // Place your settings in this file to overwrite default and user settings.
 {
+    "editor.fontFamily": "Office Code Pro",
+    "editor.fontSize": 13,
+    "editor.fontWeight": "normal",
+    "files.trimTrailingWhitespace": true,
+    "files.autoSave": "afterDelay",
+    "explorer.openEditors.visible": 0,
+    "terminal.external.osxExec": "iTerm.app",
+    "telemetry.enableTelemetry": false,
     "typescript.tsdk": "/usr/local/lib/node_modules/typescript/lib"
 }

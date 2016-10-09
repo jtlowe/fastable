@@ -1,4 +1,9 @@
-function hello(compiler: string) {
-    console.log(`Hello from ${compiler}`);
+class TableIt {
+    tableElement: HTMLElement = null;
+
+    constructor() {
+        this.tableElement = document.getElementById("table");
+    }
 }
-hello("TypeScript");
+
+alert("Worked");
