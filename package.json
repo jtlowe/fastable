@@ -1,5 +1,5 @@
 {
-  "name": "table-it.js",
+  "name": "fastable",
   "version": "1.0.0",
   "description": "Lightweight table generator",
   "main": "index.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jtlowe/table.js.git"
+    "url": "git+https://github.com/jtlowe/fastable.git"
   },
-  "author": "Jordan Lowe",
-  "license": "UNLICENSED",
+  "author": "Jordan T. Lowe",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jtlowe/table.js/issues"
+    "url": "https://github.com/jtlowe/fastable/issues"
   },
-  "homepage": "https://github.com/jtlowe/table.js#readme",
+  "homepage": "https://github.com/jtlowe/fastable#readme",
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-connect": "^5.0.0",
