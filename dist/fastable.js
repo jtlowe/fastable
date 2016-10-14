@@ -3,8 +3,9 @@ var Fastable = (function () {
         if (options === void 0) {
             return;
         }
-        this.tableElement = document.getElementById("table");
-        alert("Worked");
+        this.containerElement = options.containerElement;
+        this.data = options.data;
+        console.log(this.data);
     }
     return Fastable;
 }());

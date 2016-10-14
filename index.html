@@ -1,25 +1,51 @@
 <!doctype html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>TableIt</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="/dist/fastable.js"></script>
-    </head>
-    <body>
-        <div class="container">
-            <h1>Fastable</h1>
-            <div class="row">
-                <div class="col-12-sm">
-                    <div id="data-grid"></div>
-                </div>
-            </div>
-        </div>
-        <script>
 
+<head>
+	<meta charset="utf-8">
+	<title>TableIt</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="/dist/fastable.js"></script>
+</head>
+
+<body>
+	<div class="container">
+		<h1>Fastable</h1>
+		<div class="row">
+			<div class="col-12-sm">
+				<div id="data-grid"></div>
+			</div>
+		</div>
+	</div>
+	<script>
+        function getData(successCallback) {
+            // get fake data
+            var request = new XMLHttpRequest();
+            request.open('GET', '/test/mock_data_0500.json', true);
+
+            request.onload = function() {
+                if (request.status >= 200 && request.status < 400) {
+                    //console.log(request.responseText);
+                    var data = JSON.parse(request.responseText);
+                    successCallback(data);
+                } else {
+                }
+            };
+
+            request.onerror = function() {
+                // There was a connection error of some sort
+            };
+
+            request.send();
+        }
+
+        this.getData(function (data) {
             var fastable = new Fastable({
-                container: document.getElementById('data-grid')
+                container: document.getElementById('data-grid'),
+                data: data
             });
-        </script>
-    </body>
+        });
+    </script>
+</body>
+
 </html>
