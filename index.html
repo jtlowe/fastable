@@ -13,7 +13,7 @@
 		<h1>Fastable</h1>
 		<div class="row">
 			<div class="col-12-sm">
-				<div id="data-grid"></div>
+				<div id="fastable-wrapper"></div>
 			</div>
 		</div>
 	</div>
@@ -41,7 +41,7 @@
 
         this.getData(function (data) {
             var fastable = new Fastable({
-                container: document.getElementById('data-grid'),
+                container: document.getElementById('fastable-wrapper'),
                 data: data
             });
         });
