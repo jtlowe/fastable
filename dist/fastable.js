@@ -18,7 +18,9 @@ var Fastable = (function () {
             type: 'table', props: { 'class': 'fastable table table-bordered' }, children: []
         };
         this.createHeader();
+        this.table.appendChild(document.createElement('tbody'));
         this.createRows();
+        // this.table.style.height = this.table.offsetHeight + 'px';
         if (this.limit > 0) {
             this.createPaging();
         }
@@ -45,12 +47,14 @@ var Fastable = (function () {
         return pageIt;
     };
     Fastable.prototype.createPaging = function () {
+        var context = this;
         var pagingList = document.createElement("ul");
         var pageCount = Math.ceil(this.data.length / this.limit);
         pagingList.className = "pagination";
         for (var i = 1; i <= pageCount; i++) {
             var listItem = document.createElement("li");
             var link = document.createElement('a');
+            link.setAttribute('data-page', i.toString());
             link.textContent = i.toString();
             listItem.appendChild(link);
             pagingList.appendChild(listItem);
@@ -58,18 +62,28 @@ var Fastable = (function () {
         this.container.appendChild(pagingList);
         pagingList.addEventListener("click", function (e) {
             if (e.srcElement && e.srcElement.nodeName == "A") {
-                // List item found!  Output the ID!
-                console.log("List item was clicked!");
+                context.currentPage = parseInt(e.srcElement.getAttribute('data-page'));
+                context.clearRows(function () {
+                    context.createRows();
+                });
             }
         });
     };
+    Fastable.prototype.clearRows = function (callback) {
+        callback = callback || function () { };
+        var tbody = this.table.getElementsByTagName('tbody')[0];
+        while (tbody.firstChild) {
+            tbody.removeChild(tbody.firstChild);
+        }
+        callback();
+        return this;
+    };
     Fastable.prototype.createRows = function () {
-        var tbody = document.createElement('tbody');
         // var length: number = this.shouldPage() ? this.currentPage * this.data.length + this.limit : this.data.length;
+        var tbody = this.table.getElementsByTagName('tbody')[0];
         var length = this.data.length;
         var pageLength = this.shouldPage() ? this.limit : length;
-        var startIndex = this.currentPage * this.limit;
-        console.log(length, pageLength, startIndex);
+        var startIndex = (this.currentPage - 1) * this.limit;
         for (var i = 0; i < pageLength; i++) {
             var row = this.createRow(this.data[startIndex + i]);
             tbody.appendChild(row);
