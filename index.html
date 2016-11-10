@@ -2,26 +2,26 @@
 <html>
 
 <head>
-	<meta charset="utf-8">
-	<title>TableIt</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="/dist/fastable.js"></script>
+    <meta charset="utf-8">
+    <title>Fastable</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="/dist/fastable.js"></script>
 </head>
 
 <body>
-	<div class="container">
-		<h1>Fastable</h1>
-		<div class="row">
-			<div class="col-12-sm">
-				<div id="fastable-wrapper"></div>
-			</div>
-		</div>
-	</div>
-	<script>
+    <div class="container">
+        <h1>Fastable</h1>
+        <div class="row">
+            <div class="col-12-sm">
+                <div id="fastable-wrapper"></div>
+            </div>
+        </div>
+    </div>
+    <script>
         function getData(successCallback) {
             // get fake data
             var request = new XMLHttpRequest();
-            request.open('GET', '/test/mock_data_2500.json', true);
+            request.open('GET', '/test/mock_data_0500.json', true);
 
             request.onload = function() {
                 if (request.status >= 200 && request.status < 400) {
@@ -42,7 +42,8 @@
         this.getData(function (data) {
             var fastable = new Fastable({
                 container: document.getElementById('fastable-wrapper'),
-                data: data
+                data: data,
+                limit: 20
             });
         });
     </script>
