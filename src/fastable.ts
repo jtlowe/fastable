@@ -2,6 +2,7 @@ interface FastableOptions {
     container: HTMLElement;
     data: Array<Object>;
     limit: number;
+    header: Object;
 }
 
 class Fastable {
@@ -11,12 +12,14 @@ class Fastable {
     dom: Object;
     limit: number;
     currentPage: number = 1;
+    header: Object;
 
     constructor(options: FastableOptions) {
         if (options === void 0) { return; }
         this.container = options.container;
         this.data = options.data;
         this.limit = options.limit != undefined ? options.limit : 0;
+        this.header = options.header != undefined ? options.header : {};
 
         this.create();
     }
@@ -49,6 +52,7 @@ class Fastable {
     }
 
     createHeader() {
+        var _this = this;
         var thead: HTMLElement = document.createElement('thead');
         var tr: HTMLTableRowElement = document.createElement('tr');
         var keys: Array<string> = Object.keys(this.data[0]);
@@ -59,11 +63,75 @@ class Fastable {
 
         for (var i = 0; i < length; i++) {
             var td = document.createElement('td');
-            td.textContent = keys[i];
+            var text = keys[i];
+
+            if (this.header.hasOwnProperty(text)) {
+                text = this.header[text];
+            }
+
+            td.textContent = text;
+            td.setAttribute('data-key', keys[i]);
+            td.setAttribute('data-sort', '');
             tr.appendChild(td);
         }
 
         this.table.appendChild(thead);
+
+        tr.addEventListener("click", function (e: Event): void {
+            if (e.srcElement && e.srcElement.nodeName == "TD") {
+
+                var currentSortedBy = tr.querySelector('.sorted');
+
+                if (currentSortedBy && e.srcElement.className != 'sorted') {
+                    currentSortedBy.setAttribute('data-sort', '');
+                    currentSortedBy.className = '';
+                }
+
+                var key = e.srcElement.getAttribute('data-key');
+                _this.data.sort(function (a, b) {
+                    if (a[key] < b[key])
+                        return -1;
+                    if (a[key] > b[key])
+                        return 1;
+                    return 0;
+                })
+
+                // // do this better
+                // if (e.srcElement.getAttribute('data-sort') !== 'ASC') {
+                //     e.srcElement.setAttribute('data-sort', 'ASC');
+                // }
+                // else {
+                //     e.srcElement.setAttribute('data-sort', 'DESC')
+                //     _this.data.reverse();
+                // }
+
+
+                alert(e.srcElement.getAttribute('data-sort') === 'ASC')
+
+                if (e.srcElement.getAttribute('data-sort') === '') {
+                    // sort ascending
+                    e.srcElement.setAttribute('data-sort', 'ASC')
+                }
+                else if (e.srcElement.getAttribute('data-sort') === 'ASC') {
+                    e.srcElement.setAttribute('data-sort', 'DESC')
+                    _this.data.reverse();
+                }
+                else if (e.srcElement.getAttribute('data-sort') === 'DESC') {
+                    e.srcElement.setAttribute('data-sort', 'ASC')
+                }
+
+
+                e.srcElement.className = 'sorted';
+
+                _this.currentPage = 1;
+                _this.clearRows(function () {
+                    _this.createRows();
+                });
+
+                // console.log(_this.data);
+
+            }
+        });
     }
 
     shouldPage(): boolean {
@@ -131,21 +199,40 @@ class Fastable {
         }
 
         this.table.appendChild(tbody);
+
     }
 
     createRow(data: Object): HTMLTableRowElement {
         var row: HTMLTableRowElement = document.createElement('tr');
 
         var keys = Object.keys(data)
-        var i = keys.length;
+        var length = keys.length;
 
-        while (i--) {
-            var position = 5 - i;
+        for (var i = 0; i < length; i++) {
+            // var position = i - 5;
             var cell = document.createElement('td');
-            cell.textContent = data[keys[position]];
+            cell.textContent = data[keys[i]];
             row.appendChild(cell);
         }
 
         return row;
+    }
+}
+
+
+
+
+var sort_by = function (field, reverse, primer) {
+
+    var key = primer ?
+        function (x) { return primer(x[field]) } :
+        function (x) { return x[field] };
+
+    reverse = !reverse ? 1 : -1;
+
+    return function (a: any, b: any) {
+        var aGreater: any = a > b;
+        var bGreater: any = b > a;
+        return a = key(a), b = key(b), reverse * (aGreater - bGreater);
     }
 }

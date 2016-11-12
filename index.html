@@ -42,6 +42,9 @@
         this.getData(function (data) {
             var fastable = new Fastable({
                 container: document.getElementById('fastable-wrapper'),
+                header: {
+                    first_name: 'First Name'
+                },
                 data: data,
                 limit: 15
             });
